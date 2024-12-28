@@ -1,28 +1,56 @@
-create_password = input("Create new password : ")
-upperflag,lowerflag,numberflag = 0,0,0
+class PasswordValidator:
+    def __init__(self):
+        print("password validator object is craeted")
 
-if len(create_password) >= 8:
-    for i in create_password:
-        if i >= 'A' and i <= 'Z':
-            upperflag = 1
-        if i >= 'a' and i <= 'z':
-            lowerflag = 1
-        if ord(i) >= 48 and ord(i) <= 57:
-            numberflag = 1
+    def input_password(self):
+        self.password = input("Create new password : ")
 
-    if upperflag == 1 and lowerflag == 1 and numberflag == 1:
-        print("created password met the requirements")
-    if upperflag == 0:
-        print("your password missing UPPER letter")
-    if lowerflag == 0:
-        print("your password missing LOWER letter")
-    if numberflag == 0:
-        print("your password missing NUMBERS")
+    def check_length(self):
+        if not len(self.password) >= 8:
+            raise ValueError("your password should be atleast 8 characters long")
 
-else:
-    print("Password Length not matched")
+    def check_upperletters(self):
+        upperflag = True
+        for i in self.password:
+            if "A" <= i <= "Z":
+                upperflag = False
+                break
+        if upperflag:
+            raise TypeError("your password should contain atleast one upper character")
 
-    
+    def check_lowerletters(self):
+        lowerflag = True
+        for j in self.password:
+            if "a" <= j <= "z":
+                lowerflag = False
+                break
+
+        if lowerflag:
+            raise TypeError("your password should contain atleast one lower character")
+
+    def check_numbers(self):
+        numberflag = True
+        for i in self.password:
+            if ord(i) >= 48 and ord(i) <= 57:
+                numberflag = False
+        if numberflag:
+            raise TypeError("your password should contain atleast one number")
+
+    def validate_password(self):
+        self.input_password()
+        self.check_length()
+        self.check_upperletters()
+        self.check_lowerletters()
+        self.check_numbers()
+        print("Your created password met the requirements !!!")
 
 
-    
+def main():
+    print("Password validator")
+
+    pv = PasswordValidator()
+    pv.validate_password()
+
+
+if __name__ == "__main__":
+    main()
