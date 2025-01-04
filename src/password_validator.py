@@ -1,26 +1,35 @@
 import re
+
+
 class PasswordValidator:
-    
+    """Code will verify that created password is strong or not."""
+
     def input_password(self):
+        """Inputs password from user."""
         self.password = input("Create new password : ")
 
     def check_length(self):
+        """Checks the length of the password."""
         if not len(self.password) >= 8:
             raise ValueError("your password should be atleast 8 characters long")
 
-    def check_upperletters(self):   
-        if not re.match(r'.*[A-Z].*',self.password):
+    def check_upperletters(self):
+        """Checks the upper case in the password."""
+        if not re.match(r".*[A-Z].*", self.password):
             raise TypeError("your password should contain atleast one upper character")
 
     def check_lowerletters(self):
-        if not re.match(r'.*[a-z].*',self.password):
+        """Checks the lower case in the password."""
+        if not re.match(r".*[a-z].*", self.password):
             raise TypeError("your password should contain atleast one lower character")
 
     def check_numbers(self):
-        if not re.match(r'.*[0-9].*',self.password):
+        """Checks numbers are present in password or not."""
+        if not re.match(r".*[0-9].*", self.password):
             raise TypeError("your password should contain atleast one number")
 
     def validate_password(self):
+        """Defines the flow of validating passwords."""
         self.input_password()
         self.check_length()
         self.check_upperletters()
