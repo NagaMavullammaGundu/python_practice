@@ -1,5 +1,11 @@
-import re
+import re, logging
 
+logging.basicConfig(
+    filename="passwordValidator_log.log", format="%(asctime)s %(message)s", filemode="w"
+)
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 class PasswordValidator:
     """Code will verify that created password is strong or not."""
@@ -26,6 +32,7 @@ class PasswordValidator:
     def check_numbers(self):
         """Checks numbers are present in password or not."""
         if not re.match(r".*[0-9].*", self.password):
+            logger.debug(f"no numbers in password {self.password}")
             raise TypeError("your password should contain atleast one number")
 
     def validate_password(self):
@@ -35,11 +42,11 @@ class PasswordValidator:
         self.check_upperletters()
         self.check_lowerletters()
         self.check_numbers()
-        print("Your created password met the requirements !!!")
+        logger.info("Your created password met the requirements !!!")
 
 
 def main():
-    print("Password validator")
+    logger.info("Password validator")
 
     pv = PasswordValidator()
     pv.validate_password()
