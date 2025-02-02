@@ -1,5 +1,11 @@
 import requests
 import argparse
+from enum import Enum
+
+
+class Units(Enum):
+    Celsius = "Celsius"
+    Farenheit = "Farenheit"
 
 
 URL = "http://api.openweathermap.org/data/2.5/weather?"
@@ -20,9 +26,9 @@ def city_weather(city_name, units):
     else:
         raise ValueError(f"Given city name {city_name} is invalid")
 
-    if units == "celsius":
+    if units == Units.Celsius.value:
         temperature_celsius(data["main"]["temp_min"], data["main"]["temp_max"])
-    elif units == "farenheit":
+    elif units == Units.Farenheit.value:
         temperature_farenheit(data["main"]["temp_min"], data["main"]["temp_max"])
 
 
@@ -49,12 +55,12 @@ def main():
     parser.add_argument(
         "--units",
         type=str,
-        choices=["Celsius", "Farenheit"],
-        default="Celsius",
+        choices=[Units.Celsius.value, Units.Farenheit.value],
+        default=Units.Celsius.value,
         help="Temperature Units",
     )
     args = parser.parse_args()
-    city_weather(args.city_name, args.units.lower())
+    city_weather(args.city_name, args.units)
 
 
 if __name__ == "__main__":
